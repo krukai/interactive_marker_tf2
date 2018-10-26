@@ -1,7 +1,7 @@
 interactive_marker_tf2
 ======================
 
->This package connects interactive markers with tf2.
+> A ROS package that connects interactive markers with tf2.
 
 This package provides means to make interactive markers from any interactive marker server available as transforms.
 
