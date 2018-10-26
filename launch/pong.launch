@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="interactive_marker_tf2" type="int_marker_to_tf.py" name="int_marker_to_tf" required="true" output="screen">
+    <remap from="int_server/update" to="/pong/update" />
+    <remap from="int_server/update_full" to="/pong/update_full" />
+    <param name="prefix" type="string" value="pong_" />
+    <param name="rate" type="int" value="200" />
+  </node>
+
+  <node pkg="interactive_marker_tutorials" type="pong" name="pong" required="true" />
+</launch>

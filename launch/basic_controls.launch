@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="interactive_marker_tf2" type="int_marker_to_tf.py" name="int_marker_to_tf" required="true" output="screen">
+    <remap from="int_server/update" to="/basic_controls/update" />
+    <remap from="int_server/update_full" to="/basic_controls/update_full" />
+    <param name="prefix" type="string" value="basic_" />
+    <param name="rate" type="int" value="200" />
+  </node>
+
+  <node pkg="interactive_marker_tutorials" type="basic_controls" name="basic_controls" required="true" />
+</launch>
