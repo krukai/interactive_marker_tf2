@@ -146,18 +146,21 @@ class InteractiveMarkerTransformBroadcaster:
     def broadcast_transforms(self):
         t = TransformStamped()
         t.header.seq = self.server_seq_num
-        for _, int_marker in self.int_markers.items():
-            if int_marker.header.stamp.to_sec() or int_marker.header.stamp.to_nsec():
-                t.header.stamp = int_marker.header.stamp
-            else:
-                t.header.stamp = rospy.Time.now()
-            t.header.frame_id = int_marker.header.frame_id
-            t.child_frame_id = self.prefix + int_marker.name + self.suffix
-            t.transform.translation.x = int_marker.pose.position.x
-            t.transform.translation.y = int_marker.pose.position.y
-            t.transform.translation.z = int_marker.pose.position.z
-            t.transform.rotation = int_marker.pose.orientation
-            self.br.sendTransform(t)
+        try:
+            for _, int_marker in self.int_markers.items():
+                if int_marker.header.stamp.to_sec() or int_marker.header.stamp.to_nsec():
+                    t.header.stamp = int_marker.header.stamp
+                else:
+                    t.header.stamp = rospy.Time.now()
+                t.header.frame_id = int_marker.header.frame_id
+                t.child_frame_id = self.prefix + int_marker.name + self.suffix
+                t.transform.translation.x = int_marker.pose.position.x
+                t.transform.translation.y = int_marker.pose.position.y
+                t.transform.translation.z = int_marker.pose.position.z
+                t.transform.rotation = int_marker.pose.orientation
+                self.br.sendTransform(t)
+        except RuntimeError:  # items() size has changed; abort
+            return
 
 
 if __name__ == '__main__':
